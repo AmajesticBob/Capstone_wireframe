@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Outfit Planner Prototype</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+        .nav-icon.active svg { color: #4F46E5; }
+        .nav-icon.active span { color: #4F46E5; }
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #4F46E5;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <div id="app" class="max-w-md mx-auto h-screen bg-white shadow-lg flex flex-col">
+        <!-- Header -->
+        <header class="p-4 border-b border-gray-200">
+            <h1 id="header-title" class="text-xl font-bold text-gray-800 text-center">My Closet</h1>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-grow overflow-y-auto p-4">
+            <!-- My Closet Tab -->
+            <div id="closet-tab" class="tab-content active">
+                <div class="flex items-center justify-between mb-4">
+                    <div class="flex space-x-2">
+                        <button class="filter-btn bg-indigo-600 text-white px-4 py-1.5 rounded-full text-sm font-semibold">All</button>
+                        <button class="filter-btn bg-gray-200 text-gray-700 px-4 py-1.5 rounded-full text-sm font-semibold">Tops</button>
+                        <button class="filter-btn bg-gray-200 text-gray-700 px-4 py-1.5 rounded-full text-sm font-semibold">Bottoms</button>
+                        <button class="filter-btn bg-gray-200 text-gray-700 px-4 py-1.5 rounded-full text-sm font-semibold">Shoes</button>
+                    </div>
+                    <button class="bg-indigo-100 text-indigo-600 p-2 rounded-full hover:bg-indigo-200 transition-colors">
+                        <i data-lucide="plus"></i>
+                    </button>
+                </div>
+                <div id="closet-grid" class="grid grid-cols-3 gap-3">
+                    <!-- Clothing items will be injected here by JS -->
+                </div>
+            </div>
+
+            <!-- Planner Tab -->
+            <div id="planner-tab" class="tab-content">
+                <div class="bg-gray-100 rounded-xl p-4 min-h-[250px] flex flex-col items-center justify-center border-2 border-dashed border-gray-300 mb-6">
+                     <div id="planner-items" class="flex space-x-4">
+                        <div id="planner-top" class="w-24 h-24 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400"><p class="text-xs text-center">Top</p></div>
+                        <div id="planner-bottom" class="w-24 h-24 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400"><p class="text-xs text-center">Bottom</p></div>
+                        <div id="planner-shoes" class="w-24 h-24 bg-gray-200 rounded-lg flex items-center justify-center text-gray-400"><p class="text-xs text-center">Shoes</p></div>
+                    </div>
+                </div>
+                <button id="generate-btn" class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-xl hover:bg-indigo-700 transition-colors flex items-center justify-center space-x-2 disabled:bg-indigo-300" disabled>
+                     <i data-lucide="sparkles" class="w-5 h-5"></i>
+                    <span>Generate Outfit</span>
+                </button>
+                <div class="mt-6">
+                    <h3 class="font-bold text-gray-800 mb-2">Recommendations</h3>
+                    <p class="text-sm text-gray-500">Select an item from your closet to get started.</p>
+                     <div id="recommendations" class="hidden mt-4 space-y-4">
+                        <div>
+                            <h4 class="font-semibold text-gray-700">Complementary Colors</h4>
+                             <div class="flex space-x-2 overflow-x-auto p-2">
+                                <img src="https://placehold.co/100x100/FDBA74/FFFFFF?text=Orange+Skirt" class="rounded-lg w-20 h-20 object-cover flex-shrink-0">
+                            </div>
+                        </div>
+                         <div>
+                            <h4 class="font-semibold text-gray-700">Monochromatic</h4>
+                            <div class="flex space-x-2 overflow-x-auto p-2">
+                                <img src="https://placehold.co/100x100/3B82F6/FFFFFF?text=Navy+Pants" class="rounded-lg w-20 h-20 object-cover flex-shrink-0">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Inspiration Tab -->
+            <div id="inspiration-tab" class="tab-content">
+                 <button class="w-full bg-pink-500 text-white font-bold py-3 px-4 rounded-xl hover:bg-pink-600 transition-colors flex items-center justify-center space-x-2 mb-6">
+                     <i data-lucide="camera" class="w-5 h-5"></i>
+                    <span>Upload Inspiration</span>
+                </button>
+                <div class="space-y-6">
+                    <div class="bg-white rounded-xl border border-gray-200 p-4">
+                        <h3 class="font-bold text-gray-800 mb-3">Recreate This Look</h3>
+                        <div class="flex gap-4">
+                            <div class="w-1/2">
+                                 <p class="text-xs font-semibold text-gray-500 mb-1 text-center">INSPIRATION</p>
+                                <img src="https://placehold.co/300x400/E0E0E0/333333?text=Inspo+Look" class="rounded-lg object-cover w-full h-auto">
+                            </div>
+                            <div class="w-1/2 space-y-2">
+                                <p class="text-xs font-semibold text-gray-500 mb-1 text-center">YOUR CLOSET</p>
+                               <img src="https://placehold.co/100x100/FFFFFF/333333?text=White+Tee" class="rounded-lg w-full h-auto object-cover border">
+                               <img src="https://placehold.co/100x100/BFDBFE/333333?text=Blue+Jeans" class="rounded-lg w-full h-auto object-cover border">
+                               <img src="https://placehold.co/100x100/FEF9C3/333333?text=White+Shoes" class="rounded-lg w-full h-auto object-cover border">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <!-- Bottom Navigation -->
+        <nav class="grid grid-cols-3 gap-4 p-4 border-t border-gray-200">
+            <button class="nav-icon active" data-tab="closet-tab" data-title="My Closet">
+                <i data-lucide="shirt" class="mx-auto"></i>
+                <span class="text-xs font-medium text-gray-600">Closet</span>
+            </button>
+            <button class="nav-icon" data-tab="planner-tab" data-title="Outfit Planner">
+                <i data-lucide="layout-dashboard" class="mx-auto"></i>
+                <span class="text-xs font-medium text-gray-600">Planner</span>
+            </button>
+            <button class="nav-icon" data-tab="inspiration-tab" data-title="Inspiration">
+                <i data-lucide="lightbulb" class="mx-auto"></i>
+                <span class="text-xs font-medium text-gray-600">Inspiration</span>
+            </button>
+        </nav>
+    </div>
+
+    <!-- AI Generation Modal -->
+    <div id="loading-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center">
+        <div class="bg-white p-8 rounded-2xl text-center shadow-xl flex flex-col items-center">
+            <div class="loader mb-4"></div>
+            <p class="font-semibold text-gray-700">Generating your outfit...</p>
+            <p class="text-sm text-gray-500">The AI is getting dressed!</p>
+        </div>
+    </div>
+    
+    <div id="result-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center p-4">
+        <div class="bg-white p-4 rounded-2xl text-center shadow-xl w-full max-w-sm relative">
+            <button id="close-result-btn" class="absolute -top-2 -right-2 bg-white rounded-full p-1.5 shadow-md">
+                 <i data-lucide="x" class="text-gray-600"></i>
+            </button>
+            <h2 class="text-lg font-bold text-gray-800 mb-3">Here's Your Outfit!</h2>
+            <img id="result-image" src="https://placehold.co/400x500/D1D5DB/FFFFFF?text=Generated+Outfit" class="rounded-lg mb-4 w-full h-auto object-cover">
+            <button class="w-full bg-indigo-600 text-white font-bold py-3 px-4 rounded-xl hover:bg-indigo-700 transition-colors flex items-center justify-center space-x-2">
+                 <i data-lucide="send" class="w-5 h-5"></i>
+                <span>Share with Friends</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+
+            const closet = [
+                { id: 1, type: 'Tops', src: 'https://placehold.co/200x200/FFFFFF/333333?text=White+Tee' },
+                { id: 2, type: 'Bottoms', src: 'https://placehold.co/200x200/BFDBFE/333333?text=Blue+Jeans' },
+                { id: 3, type: 'Shoes', src: 'https://placehold.co/200x200/FEF9C3/333333?text=White+Shoes' },
+                { id: 4, type: 'Tops', src: 'https://placehold.co/200x200/A7F3D0/333333?text=Green+Shirt' },
+                { id: 5, type: 'Tops', src: 'https://placehold.co/200x200/93C5FD/FFFFFF?text=Blue+Sweater' },
+                { id: 6, type: 'Bottoms', src: 'https://placehold.co/200x200/333333/FFFFFF?text=Black+Pants' },
+                { id: 7, type: 'Shoes', src: 'https://placehold.co/200x200/78716C/FFFFFF?text=Brown+Boots' },
+                { id: 8, type: 'Bottoms', src: 'https://placehold.co/200x200/FDBA74/FFFFFF?text=Orange+Skirt' },
+                { id: 9, type: 'Tops', src: 'https://placehold.co/200x200/FBCFE8/333333?text=Pink+Blouse' },
+            ];
+            
+            const plannerState = { top: null, bottom: null, shoes: null };
+
+            const closetGrid = document.getElementById('closet-grid');
+            const navIcons = document.querySelectorAll('.nav-icon');
+            const tabContents = document.querySelectorAll('.tab-content');
+            const headerTitle = document.getElementById('header-title');
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const generateBtn = document.getElementById('generate-btn');
+            const loadingModal = document.getElementById('loading-modal');
+            const resultModal = document.getElementById('result-modal');
+            const closeResultBtn = document.getElementById('close-result-btn');
+
+            const renderCloset = (filter = 'All') => {
+                closetGrid.innerHTML = '';
+                const filteredItems = filter === 'All' ? closet : closet.filter(item => item.type === filter);
+                filteredItems.forEach(item => {
+                    const div = document.createElement('div');
+                    div.className = 'aspect-square bg-gray-100 rounded-lg overflow-hidden cursor-pointer hover:ring-2 hover:ring-indigo-500 transition-all';
+                    div.innerHTML = `<img src="${item.src}" alt="${item.type}" class="w-full h-full object-cover">`;
+                    div.addEventListener('click', () => selectClosetItem(item));
+                    closetGrid.appendChild(div);
+                });
+            };
+
+            const selectClosetItem = (item) => {
+                alert(`Added ${item.type} to the planner!`);
+                switch (item.type) {
+                    case 'Tops':
+                        plannerState.top = item;
+                        document.getElementById('planner-top').innerHTML = `<img src="${item.src}" class="w-full h-full object-cover rounded-lg">`;
+                        break;
+                    case 'Bottoms':
+                        plannerState.bottom = item;
+                         document.getElementById('planner-bottom').innerHTML = `<img src="${item.src}" class="w-full h-full object-cover rounded-lg">`;
+                        break;
+                    case 'Shoes':
+                        plannerState.shoes = item;
+                        document.getElementById('planner-shoes').innerHTML = `<img src="${item.src}" class="w-full h-full object-cover rounded-lg">`;
+                        break;
+                }
+                
+                // Show recommendations if a top is selected
+                 if (item.type === 'Tops') {
+                    document.getElementById('recommendations').classList.remove('hidden');
+                }
+
+                // Switch to planner tab
+                switchTab('planner-tab', 'Outfit Planner');
+                updateGenerateButtonState();
+            };
+            
+            const updateGenerateButtonState = () => {
+                if(plannerState.top && plannerState.bottom && plannerState.shoes) {
+                    generateBtn.disabled = false;
+                } else {
+                    generateBtn.disabled = true;
+                }
+            };
+
+            const switchTab = (tabId, title) => {
+                tabContents.forEach(tab => {
+                    tab.classList.remove('active');
+                    if (tab.id === tabId) {
+                        tab.classList.add('active');
+                    }
+                });
+
+                navIcons.forEach(icon => {
+                    icon.classList.remove('active');
+                    if (icon.dataset.tab === tabId) {
+                        icon.classList.add('active');
+                    }
+                });
+                headerTitle.textContent = title;
+            };
+
+            navIcons.forEach(icon => {
+                icon.addEventListener('click', () => {
+                    switchTab(icon.dataset.tab, icon.dataset.title);
+                });
+            });
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.replace('bg-indigo-600', 'bg-gray-200'));
+                    filterBtns.forEach(b => b.classList.replace('text-white', 'text-gray-700'));
+                    btn.classList.replace('bg-gray-200', 'bg-indigo-600');
+                    btn.classList.replace('text-gray-700', 'text-white');
+                    renderCloset(btn.textContent);
+                });
+            });
+
+            generateBtn.addEventListener('click', () => {
+                loadingModal.style.display = 'flex';
+                // Simulate API call
+                setTimeout(() => {
+                    loadingModal.style.display = 'none';
+                    resultModal.style.display = 'flex';
+                }, 3000);
+            });
+            
+            closeResultBtn.addEventListener('click', () => {
+                 resultModal.style.display = 'none';
+            });
+            
+
+            // Initial render
+            renderCloset();
+        });
+    </script>
+</body>
+</html>

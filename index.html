@@ -98,26 +98,26 @@
                         </div>
                     </header>
                     <main class="flex-grow w-full px-4 md:px-8 pt-4 pb-24">
-                        <div class="flex items-center space-x-2 mb-6 overflow-x-auto pb-2 no-scrollbar">
-                            <button class="px-4 py-2 text-sm font-semibold rounded-full bg-primary text-white flex-shrink-0">All</button>
-                            <button class="px-4 py-2 text-sm font-semibold rounded-full bg-card-light dark:bg-card-dark text-text-light dark:text-text-dark flex-shrink-0">Tops</button>
-                            <button class="px-4 py-2 text-sm font-semibold rounded-full bg-card-light dark:bg-card-dark text-text-light dark:text-text-dark flex-shrink-0">Bottoms</button>
-                            <button class="px-4 py-2 text-sm font-semibold rounded-full bg-card-light dark:bg-card-dark text-text-light dark:text-text-dark flex-shrink-0">Shoes</button>
+                        <div id="closet-filter-buttons" class="flex items-center space-x-2 mb-6 overflow-x-auto pb-2 no-scrollbar">
+                            <button onclick="filterCloset('all')" class="filter-btn px-4 py-2 text-sm font-semibold rounded-full bg-primary text-white flex-shrink-0">All</button>
+                            <button onclick="filterCloset('top')" class="filter-btn px-4 py-2 text-sm font-semibold rounded-full bg-card-light dark:bg-card-dark text-text-light dark:text-text-dark flex-shrink-0">Tops</button>
+                            <button onclick="filterCloset('bottom')" class="filter-btn px-4 py-2 text-sm font-semibold rounded-full bg-card-light dark:bg-card-dark text-text-light dark:text-text-dark flex-shrink-0">Bottoms</button>
+                            <button onclick="filterCloset('shoe')" class="filter-btn px-4 py-2 text-sm font-semibold rounded-full bg-card-light dark:bg-card-dark text-text-light dark:text-text-dark flex-shrink-0">Shoes</button>
                             <div class="flex-grow"></div>
                             <button class="w-10 h-10 flex-shrink-0 flex items-center justify-center rounded-full bg-primary text-white">
                                 <span class="material-icons !text-lg">add</span>
                             </button>
                         </div>
-                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                            <div class="bg-card-light dark:bg-card-dark rounded-lg p-2 aspect-square flex items-center justify-center shadow"><p class="text-sm font-medium text-center text-text-light dark:text-text-dark">White Tee</p></div>
-                            <div class="bg-blue-300 dark:bg-blue-800 rounded-lg p-2 aspect-square flex items-center justify-center shadow"><p class="text-sm font-medium text-center text-white dark:text-blue-100">Blue Jeans</p></div>
-                            <div class="bg-yellow-200 dark:bg-yellow-800 rounded-lg p-2 aspect-square flex items-center justify-center shadow"><p class="text-sm font-medium text-center text-yellow-800 dark:text-yellow-100">White Shoes</p></div>
-                            <div class="bg-green-300 dark:bg-green-800 rounded-lg p-2 aspect-square flex items-center justify-center shadow"><p class="text-sm font-medium text-center text-green-800 dark:text-green-100">Green Shirt</p></div>
-                            <div class="bg-blue-400 dark:bg-blue-700 rounded-lg p-2 aspect-square flex items-center justify-center shadow"><p class="text-sm font-medium text-center text-white dark:text-blue-100">Blue Sweater</p></div>
-                            <div class="bg-gray-800 dark:bg-gray-900 rounded-lg p-2 aspect-square flex items-center justify-center shadow"><p class="text-sm font-medium text-center text-white">Black Pants</p></div>
-                            <div class="bg-gray-500 dark:bg-gray-600 rounded-lg p-2 aspect-square flex items-center justify-center shadow"><p class="text-sm font-medium text-center text-white">Brown Boots</p></div>
-                            <div class="bg-orange-300 dark:bg-orange-700 rounded-lg p-2 aspect-square flex items-center justify-center shadow"><p class="text-sm font-medium text-center text-orange-800 dark:text-orange-100">Orange Skirt</p></div>
-                            <div class="bg-pink-200 dark:bg-pink-800 rounded-lg p-2 aspect-square flex items-center justify-center shadow"><p class="text-sm font-medium text-center text-pink-800 dark:text-pink-100">Pink Blouse</p></div>
+                        <div id="closet-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                            <div data-category="top" class="clothing-item bg-card-light dark:bg-card-dark rounded-lg p-2 aspect-square flex items-center justify-center shadow"><p class="text-sm font-medium text-center text-text-light dark:text-text-dark">White Tee</p></div>
+                            <div data-category="bottom" class="clothing-item bg-blue-300 dark:bg-blue-800 rounded-lg p-2 aspect-square flex items-center justify-center shadow"><p class="text-sm font-medium text-center text-white dark:text-blue-100">Blue Jeans</p></div>
+                            <div data-category="shoe" class="clothing-item bg-yellow-200 dark:bg-yellow-800 rounded-lg p-2 aspect-square flex items-center justify-center shadow"><p class="text-sm font-medium text-center text-yellow-800 dark:text-yellow-100">White Shoes</p></div>
+                            <div data-category="top" class="clothing-item bg-green-300 dark:bg-green-800 rounded-lg p-2 aspect-square flex items-center justify-center shadow"><p class="text-sm font-medium text-center text-green-800 dark:text-green-100">Green Shirt</p></div>
+                            <div data-category="top" class="clothing-item bg-blue-400 dark:bg-blue-700 rounded-lg p-2 aspect-square flex items-center justify-center shadow"><p class="text-sm font-medium text-center text-white dark:text-blue-100">Blue Sweater</p></div>
+                            <div data-category="bottom" class="clothing-item bg-gray-800 dark:bg-gray-900 rounded-lg p-2 aspect-square flex items-center justify-center shadow"><p class="text-sm font-medium text-center text-white">Black Pants</p></div>
+                            <div data-category="shoe" class="clothing-item bg-gray-500 dark:bg-gray-600 rounded-lg p-2 aspect-square flex items-center justify-center shadow"><p class="text-sm font-medium text-center text-white">Brown Boots</p></div>
+                            <div data-category="bottom" class="clothing-item bg-orange-300 dark:bg-orange-700 rounded-lg p-2 aspect-square flex items-center justify-center shadow"><p class="text-sm font-medium text-center text-orange-800 dark:text-orange-100">Orange Skirt</p></div>
+                            <div data-category="top" class="clothing-item bg-pink-200 dark:bg-pink-800 rounded-lg p-2 aspect-square flex items-center justify-center shadow"><p class="text-sm font-medium text-center text-pink-800 dark:text-pink-100">Pink Blouse</p></div>
                         </div>
                     </main>
                 </div>
@@ -282,8 +282,8 @@
                                     <img alt="User profile picture" class="w-24 h-24 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpApFXTCwbbmJOOSvLVNZh32l8sTojvUNrfQsZy6VmEcRdz_s-6QQ-hQeCi1R52b2D-fFR59YGJqDOxjZWIB5WqlE1Ikql_a9Vifq-YdlLkonz4WEEeNB76ipCSKWcGb-AzVLhcSc5gZSur8vYjd3pwxJIJ5-oPuo3Az1NA7AzTsCNEblIk9juhUnW3Jgh9GtKXpJyT8rTH5nM7QNf7xHCPOtZ6OjoFEgwx19LvrPXQMH7dOOEt-9NTx2x9O3cWfZqRDjdRS9MvpkU" />
                                     <button class="absolute bottom-0 right-0 bg-primary text-white rounded-full w-7 h-7 flex items-center justify-center"><span class="material-icons !text-base">edit</span></button>
                                 </div>
-                                <h2 class="text-2xl font-bold text-text-light dark:text-text-dark">Jane Doe</h2>
-                                <p class="text-text-secondary-light dark:text-text-secondary-dark">@Jane.Doe</p>
+                                <h2 class="text-2xl font-bold text-text-light dark:text-text-dark">Jessica Lee</h2>
+                                <p class="text-text-secondary-light dark:text-text-secondary-dark">@jessica.style</p>
                             </div>
                             <div class="grid grid-cols-2 gap-4 mb-8 text-center">
                                 <div><p class="text-xl font-bold text-text-light dark:text-text-dark">152</p><p class="text-sm text-text-secondary-light dark:text-text-secondary-dark">Items</p></div>
@@ -352,15 +352,42 @@
             
             window.scrollTo(0, 0);
         }
+        
+        function filterCloset(category) {
+            const filterButtonsContainer = document.getElementById('closet-filter-buttons');
+            const filterButtons = filterButtonsContainer.querySelectorAll('.filter-btn');
+            const closetItems = document.querySelectorAll('#closet-grid .clothing-item');
+
+            // Update button styles
+            filterButtons.forEach(button => {
+                const buttonCategory = button.textContent.toLowerCase();
+                if (buttonCategory === category) {
+                    button.classList.add('bg-primary', 'text-white');
+                    button.classList.remove('bg-card-light', 'dark:bg-card-dark', 'text-text-light', 'dark:text-text-dark');
+                } else {
+                    button.classList.remove('bg-primary', 'text-white');
+                    button.classList.add('bg-card-light', 'dark:bg-card-dark', 'text-text-light', 'dark:text-text-dark');
+                }
+            });
+
+            // Filter items
+            closetItems.forEach(item => {
+                if (category === 'all' || item.dataset.category === category) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
 
         const darkModeToggle = document.getElementById('darkModeToggle');
         
         if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
             document.documentElement.classList.add('dark');
-            darkModeToggle.checked = true;
+            if(darkModeToggle) darkModeToggle.checked = true;
         } else {
             document.documentElement.classList.remove('dark');
-            darkModeToggle.checked = false;
+            if(darkModeToggle) darkModeToggle.checked = false;
         }
 
         darkModeToggle.addEventListener('change', function() {

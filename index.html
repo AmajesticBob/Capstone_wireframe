@@ -37,7 +37,7 @@
                         "border-light": "#E5E7EB", // Gray 200
                         "border-dark": "#374151", // Gray 700
                         "input-light": "#F3F4F6",
-                        "input-dark": "#374151",
+                        "input-dark": "#374151",
                     },
                     fontFamily: {
                         display: ["Poppins", "sans-serif"],
@@ -317,7 +317,7 @@
                             <div class="w-8"></div>
                         </div>
                     </header>
-                    <main class="flex-grow max-w-md mx-auto w-full px-4 pt-6 pb-8">
+                    <main class="flex-grow max-w-md mx-auto w-full px-4 pt-6 pb-24 md:pb-8">
                         <div class="space-y-6">
                             <div>
                                 <label class="block text-sm font-medium text-text-light dark:text-text-dark mb-2">Photo</label>
@@ -353,19 +353,26 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="mt-8">
+                        <!-- Desktop Save Button -->
+                        <div class="hidden md:block mt-8">
                             <button onclick="showPage('page-closet')" class="w-full bg-primary text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:bg-indigo-700 transition-colors">
                                 Save Item
                             </button>
                         </div>
                     </main>
+                     <!-- Mobile Save Button Footer -->
+                    <footer class="md:hidden fixed bottom-0 left-0 right-0 max-w-md mx-auto p-4 bg-background-light dark:bg-background-dark border-t border-border-light dark:border-border-dark">
+                        <button onclick="showPage('page-closet')" class="w-full bg-primary text-white font-bold py-3 px-4 rounded-lg shadow-lg hover:bg-indigo-700 transition-colors">
+                            Save Item
+                        </button>
+                    </footer>
                 </div>
 
             </div>
         </div>
 
         <!-- ===== Mobile Bottom Navigation Bar ===== -->
-        <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-card-light dark:bg-card-dark border-t border-border-light dark:border-border-dark z-30">
+        <nav id="mobile-nav" class="md:hidden fixed bottom-0 left-0 right-0 bg-card-light dark:bg-card-dark border-t border-border-light dark:border-border-dark z-30">
             <div class="flex justify-around py-2 max-w-md mx-auto">
                 <button onclick="showPage('page-closet')" data-page="page-closet" class="nav-link flex flex-col items-center justify-center w-1/5">
                     <span class="material-icons">checkroom</span><span class="text-xs font-medium">Closet</span>
@@ -392,6 +399,8 @@
         const navLinks = document.querySelectorAll('.nav-link');
         const darkModeToggle = document.getElementById('darkModeToggle');
         const themeColorMeta = document.getElementById('theme-color-meta');
+        const mobileNav = document.getElementById('mobile-nav');
+
 
         function showPage(pageId) {
             pages.forEach(page => {
@@ -403,6 +412,15 @@
             if (activePage) {
                 activePage.classList.remove('hidden');
                 activePage.classList.add('flex');
+            }
+
+            // Show or hide the main mobile navigation
+            if (mobileNav) {
+                if (pageId === 'page-add-item') {
+                    mobileNav.classList.add('hidden');
+                } else {
+                    mobileNav.classList.remove('hidden');
+                }
             }
 
             let pageHasNavLink = false;
@@ -488,5 +506,4 @@
     </script>
 </body>
 </html>
-
 
